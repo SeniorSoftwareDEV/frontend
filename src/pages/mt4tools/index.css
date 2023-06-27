@@ -1,0 +1,128 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    gap: 20px;
+}
+
+.left-side {
+    display: flex;
+    flex-direction: column;
+    min-width: 250px;
+    color: white;
+}
+
+.logo {
+    display: flex;
+    height: 70px;
+}
+
+.logo-img {
+    width: 60px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.logo-text {
+    text-align: center;
+    padding: 0px 10px
+}
+
+.open-trades {
+    width: 100%;
+    height: 400px;
+    background-color: RGB(35,35,35);
+    border-radius: 20px;
+    border: 1px solid gray;
+    padding: 10px 20px;
+}
+
+.total-profit {
+    width: 100%;
+    height: 350px;
+    margin-top: 10px;
+    background-color: RGB(35,35,35);
+    border-radius: 20px;
+    border: 1px solid gray;
+}
+
+.data-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: 10px;
+}
+
+.summary {
+    display: flex;
+    height: 50px;
+    width: 100%;
+    color: white;
+    gap: 10px;
+    align-items: center;
+}
+
+.graph {
+    width: 100%;
+    height: 250px;
+    background-color: wheat;
+}
+
+.tab {
+    width: 100%;
+    height: 510px;
+}
+
+main {
+    background-color: #262626;
+}
+
+.data-info {
+    width: calc(100% - 270px);
+}
+
+.tab-container {
+    width: 100%;
+    height: 460px;
+    background-color: RGB(35,35,35);
+    display: flex;
+    flex-direction: column  ;
+    overflow: auto;
+}
+
+.combo-group {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    color: white;
+    gap: 10px;
+}
+
+.datepicker {
+    height: 40px;
+    background-color: transparent;
+    color: white;
+    border-style: none;
+    border: 1px solid white;
+    border-radius: 4px;
+    padding-left: 10px;
+    width: 100%;
+}
+
+.custom-scrollbar-wrapper {
+    width: 100%;
+    height: 300px; /* Set the desired height */
+  }
+  
+.custom-scrollbar-thumb-vertical {
+background-color: #888; /* Set the color of the scroll bar */
+border-radius: 5px; /* Adjust the border-radius to customize the look */
+}
+
+.timepicker .ant-picker-input {
+    background-color: transparent;
+    color: red;
+}
