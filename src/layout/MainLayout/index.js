@@ -46,7 +46,7 @@ const MainLayout = () => {
     <Box sx={{ display: 'flex', width: '100%', minHeight: '100vh', bgcolor: '#1e1e1e' }}>
       <Header open={open} handleDrawerToggle={handleDrawerToggle} />
       <Drawer open={open} handleDrawerToggle={handleDrawerToggle} />
-      <Box component="main" sx={{ width: '100%', flexGrow: 1, p: 2, marginTop: '60px' }}>
+      <Box component="main" sx={{ width: '100%', flexGrow: 1, marginTop: '60px', overflow: 'auto' }}>
         <Outlet />
       </Box>
     </Box>

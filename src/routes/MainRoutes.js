@@ -12,7 +12,7 @@ const Typography = Loadable(lazy(() => import('pages/components-overview/Typogra
 const Color = Loadable(lazy(() => import('pages/components-overview/Color')));
 const Shadow = Loadable(lazy(() => import('pages/components-overview/Shadow')));
 const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons')));
-const MT4Tools = Loadable(lazy(() => import('pages/mt4tools')));
+const MT4Tools = Loadable(lazy(() => import('pages/mt4tools/MT4Tools')));
 const InsiderActivity = Loadable(lazy(() => import('pages/component-widget/InsiderActivity')));
 const SpliteHistory = Loadable(lazy(() => import('pages/component-widget/SplitHistory')));
 // const SelectComponent = Loadable(lazy(() => import('pages/mt4tools/Select')));

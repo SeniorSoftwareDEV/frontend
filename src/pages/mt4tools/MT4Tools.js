@@ -57,22 +57,21 @@ const MT4Tools = () => {
             theme: "light2", // "light1", "dark1", "dark2"
             height: "250",
             axisX:{
-                gridThickness: 2,
+                gridThickness: 1,
                 interval:2, 
                 intervalType: "day",        
-                valueFormatString: "YYYY MM DD", 
+                valueFormatString: "YY.MM.DD", 
                 labelAngle: 90
             },
             data: [{
                 type: "line",
-                toolTipContent: "Total Legs {x}: {y}",
+                toolTipContent: "Total Legs: ({x}): {y}",
                 dataPoints: elementsChart
             }]
         }
         return (
         <div>
-            <CanvasJSChart options = {options}
-            />
+            <CanvasJSChart options = {options} />
         </div>
         );
     }
@@ -104,7 +103,6 @@ const MT4Tools = () => {
                 return { ...pre, DATA: temp['DATA'][0], ACCOUNT: temp['ACCOUNT'][0], LEGS: temp['LEGS'][0], SYMBOL: temp['SYMBOL'][0], TYPE: temp['TYPE'][0] }
             })
            
-            
             //  Widget 1
             let SL_items = res.data.SL
             for(let SL_item in SL_items) {
@@ -123,16 +121,6 @@ const MT4Tools = () => {
                     );
                 }
                 setElementsSL(element)
-                
-                // let chart_info = res.data.Chart
-                // let chart_temp = []
-                // for(let Chart_item in chart_info) {
-                    //     let key = (Object.values(chart_info)[Chart_item][0])
-                    //     let val = Object.values(chart_info)[Chart_item][1]
-                    //     chart_temp.push({x:new Date(key), y:val})
-                // }
-                // setElementsChart(chart_temp)
-                
             })
             .catch((err) => {
                 console.log(err)
@@ -194,9 +182,14 @@ const MT4Tools = () => {
                 setProfit(temp_profit)
                 
                 //  Widget 3
-                let chartRES = res.data.ChartRES
-                console.log(chartRES)
-                setElementsChart(chartRES)
+                let chart_info = res.data.ChartRES
+                let chart_temp = []
+                for(let Chart_item in chart_info) {
+                        let key = (Object.values(chart_info)[Chart_item][0])
+                        let val = Object.values(chart_info)[Chart_item][1]
+                        chart_temp.push({x:new Date(key), y:val})
+                }
+                setElementsChart(chart_temp)
 
                 //  Widget 9
                 let overview_temp = res.data.overview
@@ -260,53 +253,55 @@ const MT4Tools = () => {
                         <div style={{fontSize: '25px', cursor: 'pointer'}}><TableOutlined /></div>
                         <div>{update_string}</div>
                     </div>
-                    <div className='graph' >
-                        <Chart /> 
-                    </div>
-                    <div className='tab'>
-                        {
-                            onLoading ? <Backdrop sx={{ color: '#fff', zIndex: 999 }} open={true}>
-                                            <CircularProgress color="inherit" />
-                                        </Backdrop>:
-                            (
-                            <div className='tab-container' ref={tabRef}>
-                                <div className='combo-group'>
-                                    {Object.entries(combo).map(([key, value]) => (
-                                        <div key={key} style={{width: '100%'}}>
-                                            <div style={{padding:'5px'}}>{key}</div>
-                                            <FormControl sx={{ minWidth: '100%', color: 'white', fontSize: '30px' }}>
-                                                <Select value={filter[key]} onChange={(e) => handleChange(key, e.target.value)} sx={{ '& .MuiSelect-icon': { color: 'white' }, color: 'white' , height: '30px' }}>
-                                                    {value.map((item, index) => (
-                                                        <MenuItem value={item} key={index}>{item}</MenuItem>
-                                                    ))}
-                                                </Select>
-                                            </FormControl>
+                    {
+                        onLoading ? <Backdrop sx={{ color: '#fff', zIndex: 999 }} open={true}>
+                                        <CircularProgress color="inherit" />
+                                    </Backdrop>:
+                        (
+                        <div>
+                            <div className='graph' >
+                                <Chart /> 
+                            </div>
+                            <div className='tab'>
+                                <div className='tab-container' ref={tabRef}>
+                                    <div className='combo-group'>
+                                        {Object.entries(combo).map(([key, value]) => (
+                                            <div key={key} style={{width: '100%'}}>
+                                                <div style={{padding:'5px'}}>{key}</div>
+                                                <FormControl sx={{ minWidth: '100%', color: 'white', fontSize: '30px' }}>
+                                                    <Select value={filter[key]} onChange={(e) => handleChange(key, e.target.value)} sx={{ '& .MuiSelect-icon': { color: 'white' }, color: 'white' , height: '30px' }}>
+                                                        {value.map((item, index) => (
+                                                            <MenuItem value={item} key={index}>{item}</MenuItem>
+                                                        ))}
+                                                    </Select>
+                                                </FormControl>
+                                            </div>
+                                            ))
+                                        }
+                                        <div style={{minWidth: '120px'}}>
+                                            <div style={{padding:'5px'}}>OPEN DATE</div>
+                                            <DatePicker className='datepicker' selected={filter['OPEN_DATE']} onChange={(date) => handleChange("OPEN_DATE", date)} />
                                         </div>
-                                        ))
-                                    }
-                                    <div style={{minWidth: '120px'}}>
-                                        <div style={{padding:'5px'}}>OPEN DATE</div>
-                                        <DatePicker className='datepicker' selected={filter['OPEN_DATE']} onChange={(date) => handleChange("OPEN_DATE", date)} />
+                                        <div style={{minWidth: '120px'}}>
+                                            <div style={{padding:'5px'}}>CLOSED DATE</div>
+                                            <DatePicker className='datepicker' selected={filter['CLOSED_DATE']} onChange={(date) => handleChange("CLOSED_DATE", date)} />
+                                        </div>
+                                        <div style={{minWidth: '200px' }}>
+                                            <div style={{padding:'5px'}}>OPEN TIME</div>
+                                            <TimePicker.RangePicker className="timepicker" onChange={(e) =>handleChange('TIME_RANGE', e)} showNow={false} value={timeRange}/>
+                                        </div>
+                                        <div style={{color: 'white', fontSize: '30px', width: '50%', display: 'flex', justifyContent:'right', alignItems:'end', cursor: 'pointer'}}>
+                                            <DownloadOutlined />
+                                        </div>
                                     </div>
-                                    <div style={{minWidth: '120px'}}>
-                                        <div style={{padding:'5px'}}>CLOSED DATE</div>
-                                        <DatePicker className='datepicker' selected={filter['CLOSED_DATE']} onChange={(date) => handleChange("CLOSED_DATE", date)} />
+                                    <div className='overview' ref={overviewRef}>
+                                        {overview}
                                     </div>
-                                    <div style={{minWidth: '200px' }}>
-                                        <div style={{padding:'5px'}}>OPEN TIME</div>
-                                        <TimePicker.RangePicker className="timepicker" onChange={(e) =>handleChange('TIME_RANGE', e)} showNow={false} value={timeRange}/>
-                                    </div>
-                                    <div style={{color: 'white', fontSize: '30px', width: '50%', display: 'flex', justifyContent:'right', alignItems:'end', cursor: 'pointer'}}>
-                                        <DownloadOutlined />
-                                    </div>
-                                </div>
-                                <div className='overview' ref={overviewRef}>
-                                    {overview}
                                 </div>
                             </div>
-                            )
-                        }  
-                    </div>
+                        </div>
+                        )
+                    } 
                 </div>
             </div>
         </>
